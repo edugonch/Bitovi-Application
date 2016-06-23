@@ -1,5 +1,3 @@
-$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../')
-
 require File.dirname(__FILE__) + '/../models/event'
 
 require 'rubygems'
@@ -14,6 +12,7 @@ module Bitovi
       @parser = Yajl::Parser.new(:symbolize_keys => true)
       @parser.on_parse_complete = method(:object_parsed)
       @since_mtime = nil
+      @connection = Excon.new(@fetch_url, :persistent => true)
     end
 
     def object_parsed(obj)
@@ -26,7 +25,7 @@ module Bitovi
       end
     end
 
-    def get_events(since_mtime = nil)
+    def get_events
       streamer = lambda do |chunk, remaining_bytes, total_bytes|
         begin
           @parser << chunk
@@ -37,10 +36,10 @@ module Bitovi
 
       begin 
         query = @since_mtime ? {:since_mtime => @since_mtime} : []
-        Excon.get(@fetch_url, :query => query, :response_block => streamer)
+        @connection.get(:query => query, :response_block => streamer)
       rescue Excon::Errors::Timeout => ex
         log_error("Error fetching data #{ex.message}")
-        return @since_mtime
+        @connection.reset
       end
     end
   end

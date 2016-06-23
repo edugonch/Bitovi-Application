@@ -8,8 +8,10 @@ class Program
   Bitovi::DataAccessable.init(config.redis_host, config.redis_port, config.redis_db)
 
   @meetup_service = Bitovi::MeetupService.new(config.fetch_url)
-  @since_mtime = nil
   loop do
-    @since_mtime = @meetup_service.get_events(@since_mtime)
+    begin
+      @meetup_service.get_events
+    rescue
+    end
   end  
 end
