@@ -11,7 +11,8 @@ class Program
   loop do
     begin
       @meetup_service.get_events
-    rescue
+    rescue Exception => ex
+      log_error(ex.message)
     end
   end  
 end

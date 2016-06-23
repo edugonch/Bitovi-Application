@@ -17,12 +17,8 @@ module Bitovi
 
     def object_parsed(obj)
       @since_mtime = obj[:mtime]
-      begin
-        event = Event.new(obj[:name])
-        event.save
-      rescue Exception => e
-        log_error(e.message)
-      end
+      event = Event.new(obj[:name])
+      event.save
     end
 
     def get_events
