@@ -23,11 +23,7 @@ module Bitovi
 
     def get_events
       streamer = lambda do |chunk, remaining_bytes, total_bytes|
-        begin
-          @parser << chunk
-        rescue Exception => e
-          log_error(e.message)
-        end
+        @parser << chunk
       end
 
       begin 

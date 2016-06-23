@@ -17,6 +17,8 @@ module Bitovi
         push_to_list(self.class.name.pluralize, self.send(att))
         log_info("Pushing into #{self.class.name.pluralize} value: #{self.send(att)}")
       end
+    rescue Exception => ex
+      log_error(ex.message)
     end
 
     def self.attr_accessor(*vars)
