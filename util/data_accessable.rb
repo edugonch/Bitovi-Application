@@ -1,6 +1,8 @@
 require "redis"
 
 module Bitovi
+  #Trying to separate the data access, encapsulation in a module 
+  #will make it simpler to replace it in the future
   module DataAccessable
     @@redis = Redis.new(:host => @redis_host, :port => @redis_port, :db => @redis_db)
 

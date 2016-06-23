@@ -4,6 +4,9 @@ require File.dirname(__FILE__) + '/../util/data_accessable'
 require 'rubygems'
 require 'active_support/core_ext/string'
 
+#The base class is here to encapsulate common interfaces through out the models
+#Also encapsulate the access to redis implementing the DataAccess Interface/Module
+
 module Bitovi
   class Base
     include DataAccessable

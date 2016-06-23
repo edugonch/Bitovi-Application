@@ -5,6 +5,8 @@ require 'excon'
 require 'yajl/yajl'
 
 module Bitovi
+  #The idea on the service is that it is the main entrance 
+  #for the data
   class MeetupService
 
     def initialize(fetch_url, since_mtime=nil)
@@ -26,6 +28,7 @@ module Bitovi
         @parser << chunk
       end
 
+      #If the query fails, the connection will be receted so it can connect again in the other loop
       begin 
         query = @since_mtime ? {:since_mtime => @since_mtime} : []
         @connection.get(:query => query, :response_block => streamer)

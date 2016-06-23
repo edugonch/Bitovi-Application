@@ -2,6 +2,8 @@ require 'logger'
 
 module Bitovi
 
+  #Log is universal to an application
+  #So logs should be available all over the app
   module Loggeable
     @@logger = Logger.new(STDOUT)
 
