@@ -7,11 +7,11 @@ require 'yajl/yajl'
 module Bitovi
   class MeetupService
 
-    def initialize(fetch_url)
+    def initialize(fetch_url, since_mtime=nil)
       @fetch_url = fetch_url
       @parser = Yajl::Parser.new(:symbolize_keys => true)
       @parser.on_parse_complete = method(:object_parsed)
-      @since_mtime = nil
+      @since_mtime = since_mtime
       @connection = Excon.new(@fetch_url, :persistent => true)
     end
 

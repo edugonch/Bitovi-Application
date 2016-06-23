@@ -7,6 +7,10 @@ module Bitovi
     def push_to_list(list, value)
       @@redis.lpush(list, value)
     end
+    
+    def self.redis
+      @@redis
+    end
 
     def self.init(redis_host, redis_port, redis_db)
       @@redis_host = redis_host
