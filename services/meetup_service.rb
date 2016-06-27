@@ -30,7 +30,7 @@ module Bitovi
 
       #If the query fails, the connection will be receted so it can connect again in the other loop
       begin 
-        query = @since_mtime ? {:since_mtime => @since_mtime} : []
+        query = @since_mtime ? {:since_mtime => @since_mtime} : {}
         @connection.get(:query => query, :response_block => streamer)
       rescue Excon::Errors::Timeout => ex
         log_error("Error fetching data #{ex.message}")
